@@ -1,0 +1,21 @@
+- !policy
+  id: ansible
+  annotations:
+    description: Conjur policy for Ansible
+    ansible: true
+  body:  
+    - !host
+      id: ansible-tower
+      annotations:
+        ansible: true
+    - &variables
+      - !variable
+        id: db-username
+      - !variable
+        id: db-password
+      - !variable
+        id: ssh-key
+    - !permit
+      role: !host ansible-tower
+      privileges: [read, execute]
+      resources: *variables
